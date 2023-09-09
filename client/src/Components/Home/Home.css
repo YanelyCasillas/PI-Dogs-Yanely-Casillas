@@ -1,0 +1,29 @@
+.main-container-home{
+    margin: 0;
+    padding: 0;
+    color: black;
+}
+
+.container-nav{
+    text-align: center;
+    margin: 20px auto;
+}
+
+.nav-secondary{
+    
+    
+}
+
+.nav-list{
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-item{
+    margin: 0 10px;
+    line-height: 70px;
+    width: max-content;
+}

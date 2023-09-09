@@ -14,6 +14,14 @@ const getTemperaments = async() => {
             }
         }
     }
+
+    const getAllTemperaments = await Temperament.findAll({
+        attributes: ['name'], 
+    })
+    
+    const namesArray = getAllTemperaments.map((temperament) => temperament.name);
+
+    return namesArray;
 } 
 
 module.exports = getTemperaments;

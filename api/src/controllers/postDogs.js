@@ -1,14 +1,17 @@
 const { Dog, Temperament } = require('../db');
 
-const postDogs = async (reference_image_id, name, weight, height, life_span, temperament) => {
+const postDogs = async (imageUrl, name, weight, height, life_span, temperament) => {
 
-    if (!reference_image_id || !name || !weight || !height || !life_span || !temperament) throw Error('Me falta info');
+    if (!imageUrl || !name || !weight || !height || !life_span || !temperament) throw Error('Me falta info');
     
-    const [newDog, created] = await Dog.findOrCreate({ where: { reference_image_id, name, weight, height, life_span }});
+    const [newDog, created] = await Dog.findOrCreate({ where: { imageUrl, name, weight, height, life_span }});
 
     if (!created) throw Error('El perro ya existe');
 
-    for (const temName of temperament) {
+    const arrayTemperament = temperament.split(', ');
+
+    for (const temName of arrayTemperament) {
+
         const [temperamentInstance, created] = await Temperament.findOrCreate({ where: { name: temName }});
 
         await newDog.addTemperaments([temperamentInstance]);

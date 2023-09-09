@@ -42,7 +42,7 @@ const getDogsNameHandler = async( req, res ) => {
 const getTemperamentsHandler = async( req, res ) => {
     try {
         const temperamentsFind = await getTemperaments();
-        res.status(200).send('carga exitosa')
+        res.status(200).json(temperamentsFind)
     } catch (error) {
         res.status(400).json({error: error.message});
     }
