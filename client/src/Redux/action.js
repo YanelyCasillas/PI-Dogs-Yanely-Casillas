@@ -79,6 +79,7 @@ export const getListDogsTemperament = (temperament) => {
 }
 
 export const postDog = (postNewDog) => {
+    console.log(postNewDog);
     try {
         const endpoint = 'http://localhost:3001/dogs';
         return async(dispatch) => {

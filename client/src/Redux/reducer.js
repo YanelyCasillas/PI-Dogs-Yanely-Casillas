@@ -5,7 +5,7 @@ const initialState = {
     dogfilter: [],//copia
     dogDetail: [],
     temperaments: [],
-    postDog: []
+    postDog: ''
 };
 
 const reducer = (state = initialState, action) => {

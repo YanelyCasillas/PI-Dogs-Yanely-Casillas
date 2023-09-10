@@ -8,7 +8,7 @@ import handlerChange from '../getTemperamentButton';
 const Form = () => {
 
     const [newDog, setInputValue] = useState({
-        imageUrl: '',
+        imageUrl: {},
         name: '',
         measuringSystem: '',
         weightMin: '',
@@ -80,7 +80,7 @@ const Form = () => {
             life_span: life_span,
             temperament: newDog.temperamentsTexArea
         }
-
+        
         const postNewDog = {...createNewDog, ...systemNewDog()}
         dispatch(postDog(postNewDog));
     };
@@ -182,8 +182,8 @@ const Form = () => {
                     </div>
 
                     <div>
-                    <label for="imagen">Selecciona una imagen:</label>
-                    <input onChange={handlerChangeForm} type="file" id="imageUrl" name="imageUrl" accept="image/*"/>
+                    <label for="imagen">Url de la imagen:</label>
+                    <input onChange={handlerChangeForm} type="text" id="imageUrl" name="imageUrl"/>
                     </div>
 
                     <button type="submit" class="register-form-submit">Crear nuevo perro</button>
