@@ -1,4 +1,4 @@
-import { GET_ALLDOGS, GET_DOGSBYNAME, GET_DOGSBYID, GET_TEMPERAMENTS, GET_ALL_API_OR_BD, GET_ORDER_PESO, GET_ORDER_RAZA, GET_LIST_DOGS_TEMPERAMENT, POST_DOG } from "./action-types";
+import { GET_ALLDOGS, GET_DOGSBYNAME, GET_DOGSBYID, GET_TEMPERAMENTS, GET_ALL_API_OR_BD, GET_ORDER_PESO, GET_ORDER_RAZA, GET_LIST_DOGS_TEMPERAMENT, POST_DOG, DELETE_DOG, UPDATE_DOG } from "./action-types";
 import axios from 'axios';
 
 export const getAllDogs = () => {
@@ -86,6 +86,36 @@ export const postDog = (postNewDog) => {
             const {data} = await axios.post(endpoint, postNewDog);
             return dispatch({
                 type: POST_DOG,
+                payload: data,
+            });
+        };
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+export const deleteDog = (id) => {
+    try {
+        const endpoint = `http://localhost:3001/dogs/${id}`;
+        return async(dispatch) => {
+            const {data} = await axios.delete(endpoint);
+            return dispatch({
+                type: DELETE_DOG,
+                payload: data,
+            });
+        };
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+export const updateDog = (newDog) => {
+    try {
+        const endpoint = 'http://localhost:3001/dogs';
+        return async(dispatch) => {
+            const {data} = await axios.put(endpoint, newDog);
+            return dispatch({
+                type: UPDATE_DOG,
                 payload: data,
             });
         };

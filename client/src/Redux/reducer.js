@@ -1,11 +1,11 @@
-import { GET_ALLDOGS, GET_DOGSBYNAME, GET_DOGSBYID, GET_TEMPERAMENTS, GET_ALL_API_OR_BD, GET_ORDER_PESO, GET_ORDER_RAZA, GET_LIST_DOGS_TEMPERAMENT, POST_DOG } from "./action-types";
+import { GET_ALLDOGS, GET_DOGSBYNAME, GET_DOGSBYID, GET_TEMPERAMENTS, GET_ALL_API_OR_BD, GET_ORDER_PESO, GET_ORDER_RAZA, GET_LIST_DOGS_TEMPERAMENT, POST_DOG, DELETE_DOG, UPDATE_DOG } from "./action-types";
 
 const initialState = {
     allDogs: [],//original
     dogfilter: [],//copia
     dogDetail: [],
     temperaments: [],
-    postDog: ''
+    messageDog: ''
 };
 
 const reducer = (state = initialState, action) => {
@@ -76,7 +76,17 @@ const reducer = (state = initialState, action) => {
         case POST_DOG:
             return{
                 ...state,
-                postDog: action.payload
+                messageDog: action.payload
+            };
+        case DELETE_DOG:
+            return{
+                ...state,
+                messageDog: action.payload
+            };
+        case UPDATE_DOG:
+            return{
+                ...state,
+                messageDog: action.payload
             };
         default: return {...state}
     }

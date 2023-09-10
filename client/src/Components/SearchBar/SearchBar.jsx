@@ -14,6 +14,7 @@ const SearchBar = () => {
 
     const search = () => {
         dispatch(getDogsByName(name))
+        setname('')
     }
 
     return (

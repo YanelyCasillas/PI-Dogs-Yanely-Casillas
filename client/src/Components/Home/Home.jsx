@@ -12,7 +12,7 @@ const Home = () => {
    const temperaments = useSelector((state)=> state.temperaments);
    const dogfilter = useSelector((state) => state.dogfilter); 
    const [currentPage, setCurrentPage] = useState(1);
-   const [dogsPerPage] = useState(10);
+   const [dogsPerPage] = useState(8);
 
    //get current dogs
    const indexOfLastDogs = currentPage * dogsPerPage;
@@ -48,7 +48,7 @@ const Home = () => {
     useEffect(()=>{
       dispatch(getTemperaments());
     },[])
-
+   
    return (
       <div class ='main-container-home'>
          <div class='container-nav'>
@@ -81,7 +81,7 @@ const Home = () => {
                <div id='autocomplete-wrapper' class='autocomplete-wrapper'>
                <input id='autocomplete-input' onChange={(event)=>handlerChange(event, temperaments, setInputValue)} type="text" placeholder='Temperamentos'/>
                </div>
-               <button type='submit'>Buscar</button>
+               <button type='submit' >Buscar</button>
             </form>
          </div>
 

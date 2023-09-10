@@ -40,6 +40,7 @@ function App() {
           <Route path='/' element={<Landing handleAccess={handleAccess}/>}/>
           <Route path='/home' element={<Home />}/>
           <Route path='/form' element={<Form />}/>
+          <Route path='/form/:id' element={<Form />}/>
           <Route path='/detail/:id' element={<Detail/>}/>
          </Routes>
     </div>

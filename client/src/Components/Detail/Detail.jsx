@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import {useParams} from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
-import { getDogsById } from '../../Redux/action';
+import { deleteDog, getDogsById } from '../../Redux/action';
+import { useNavigate} from 'react-router-dom';
 import './Detail.css';
 
 const Detail = () => {
     const { id } = useParams();
 
+
     const dogDetail = useSelector((state)=>state.dogDetail);
+    
 
     const dispatch = useDispatch();
 
@@ -15,8 +18,20 @@ const Detail = () => {
         dispatch(getDogsById(id))
     },[])
 
+    const deleteDogButton = () => {
+        dispatch(deleteDog(id));
+    }
+
+    const navigate = useNavigate();
+
+    const updateDogButton = () => {
+        navigate(`/form/${id}`)
+    }
+ 
     return(
-        <div className='main-container-detail'>
+        <div class='main-container-detail'>
+            {id != parseInt(id) && (<button onClick={deleteDogButton}>Eliminar</button>)}
+            {id != parseInt(id) && (<button onClick={updateDogButton}>Actualizar</button>)}
             <h2>Raza: {dogDetail.name && dogDetail.name}</h2>
             <h2>Peso</h2>
             <h2>Imperial: {dogDetail.weight?.imperial && dogDetail.weight?.imperial}</h2>

@@ -23,7 +23,6 @@ const getDogsByName = async(name) => {
             }
         }
     ]});
-    console.log(dogsFind);
 
     const dogsBD = dogsFind.map(({id, imageUrl, name, height, weight, life_span, temperaments})=>{
         const temperament = temperaments.map((t)=>t.name).join(', ');

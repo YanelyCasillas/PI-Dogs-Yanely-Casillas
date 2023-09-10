@@ -1,14 +1,21 @@
 import './Form.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
-import {getTemperaments, postDog} from '../../Redux/action';
+import { useParams, useNavigate } from 'react-router-dom';
+import {getTemperaments, postDog, updateDog} from '../../Redux/action';
 import handlerChange from '../getTemperamentButton';
 
 
 const Form = () => {
 
+    const [isEditing, setIsEditing] = useState(false);
+    const dogDetail = useSelector((state)=>state.dogDetail);
+    const { id } = useParams();
+    const navigate = useNavigate();
+
     const [newDog, setInputValue] = useState({
-        imageUrl: {},
+        id:'',
+        imageUrl: '',
         name: '',
         measuringSystem: '',
         weightMin: '',
@@ -22,13 +29,36 @@ const Form = () => {
         temperamentsTexArea: ''
     })
 
+    console.log(newDog.imageUrl);
+
     const temperaments = useSelector((state)=> state.temperaments);
 
     const dispatch = useDispatch();
 
     useEffect(()=>{
         dispatch(getTemperaments());
-    },[])
+        if (id) {
+            const weight = dogDetail.weight.metric.split(' - ');
+            const height = dogDetail.height.metric.split(' - ');
+            const life_span = dogDetail.life_span.match(/\d+/g);
+            setInputValue({
+                ...newDog,
+                id: id,
+                imageUrl: dogDetail.imageUrl,
+                name: dogDetail.name,
+                weightMin: weight[0],
+                weightMax: weight[1],
+                heightMin: height[0],
+                heightMax: height[1],
+                life_spanMin: life_span[0],
+                life_spanMax: life_span[1],
+                temperamentsTexArea: dogDetail.temperament
+            })
+            setIsEditing(true);
+        }else{
+
+        }
+    },[id])
 
     const optionsLife = [];
     for (let i = 1; i <= 25; i++) {
@@ -73,21 +103,44 @@ const Form = () => {
 
     const handlerSubmit = (event) => {
         event.preventDefault();
-        const life_span = `${newDog.life_spanMin} - ${newDog.life_spanMax} years`;
-        const createNewDog = {
-            imageUrl: newDog.imageUrl,
-            name: newDog.name,
-            life_span: life_span,
-            temperament: newDog.temperamentsTexArea
+
+        if (id) {
+            const life_span = `${newDog.life_spanMin} - ${newDog.life_spanMax} years`;
+            const createNewDog = {
+                id: id,
+                imageUrl: newDog.imageUrl,
+                name: newDog.name,
+                life_span: life_span,
+                temperament: newDog.temperamentsTexArea
+            }
+            const postNewDog = {...createNewDog, ...systemNewDog()}
+            console.log(postNewDog);
+            dispatch(updateDog(postNewDog))
+            navigate(`/detail/${id}`)
+        }else{
+            const life_span = `${newDog.life_spanMin} - ${newDog.life_spanMax} years`;
+            const createNewDog = {
+                imageUrl: newDog.imageUrl,
+                name: newDog.name,
+                life_span: life_span,
+                temperament: newDog.temperamentsTexArea
+            }
+            const postNewDog = {...createNewDog, ...systemNewDog()}
+            dispatch(postDog(postNewDog));
+            navigate('/home')
         }
         
-        const postNewDog = {...createNewDog, ...systemNewDog()}
-        dispatch(postDog(postNewDog));
     };
 
     const handlerChangeForm = (event) => {
         setInputValue({...newDog, [event.target.name]: event.target.value})
         //setErrors(validation({...userData, [event.target.name]: event.target.value})) 
+    }
+
+    const handlerChangeName = (event) => {
+        const inputName = event.target.value;
+        const formattedName = inputName.charAt(0).toUpperCase() + inputName.slice(1);
+        setInputValue({...newDog, name: formattedName});
     }
     
     const agreeTemperament = (event) => {
@@ -116,7 +169,18 @@ const Form = () => {
             }
         }
 
-        setInputValue({...newDog, temperamentsTexArea: updatedTemperamentsTexArea});
+        setInputValue({
+            ...newDog,
+            temperamentsTexArea: updatedTemperamentsTexArea,
+            temperamentInput: '',
+        });
+        const inputEl = document.querySelector('#autocomplete-input')
+        inputEl.value = '';
+    }
+
+    const deleteTemperament = (event) => {
+        event.preventDefault();
+        setInputValue({...newDog, temperamentsTexArea: ''});
     }
 
 
@@ -127,7 +191,11 @@ const Form = () => {
                     <h2 class="register-title">Agregar Perro</h2>
 
                     <div class="first-sector">
-                        <input onChange={handlerChangeForm} value={newDog.name} required class="name" type="text" name="name" placeholder="Raza"/>
+                        <input onChange={handlerChangeForm} value={newDog.id} class="id" type="text" name="id"/>
+                    </div>
+
+                    <div class="first-sector">
+                        <input onChange={handlerChangeName} value={newDog.name} required class="name" type="text" name="name" placeholder="Raza"/>
                     </div>
 
                     <div class="second-sector">
@@ -155,12 +223,12 @@ const Form = () => {
                     <div class="four-sector">
                         <label>Tiempo de vida: </label>
                         <select name="life_spanMin" id="life_spanMin" onChange={handlerChangeForm}>
-                            <option value=" " disabled selected hidden></option>
+                            <option value={newDog.life_spanMin} disabled selected hidden>{newDog.life_spanMin}</option>
                             {optionsLife}
                         </select>
                         <label> - </label>
                         <select name="life_spanMax" id="life_spanMax" onChange={handlerChangeForm}>
-                            <option value=" " disabled selected hidden></option>
+                            <option value={newDog.life_spanMax} disabled selected hidden>{newDog.life_spanMax}</option>
                             {optionsLife}
                         </select>
                         <label>years</label>
@@ -172,21 +240,22 @@ const Form = () => {
                             <input id='autocomplete-input' name='temperamentButton' onChange={(event)=>handlerChange(event, temperaments, setInputValue, newDog)} type="text" placeholder='Temperamentos'/>
                         </div>
                         
-                        <input onChange={handlerChangeForm} name='temperamentInput' type="text" placeholder='Otros Temperamentos'/>
+                        <input onChange={handlerChangeForm} name='temperamentInput' value={newDog.temperamentInput} type="text" placeholder='Otros Temperamentos'/>
                         <button onClick={agreeTemperament}>Agregar</button>
                     </div>
 
                     <div class="six-sector">
                         <label>Temperamentos escogidos:</label>
                         <textarea name="temperamentsTexArea" value={newDog.temperamentsTexArea} id="" cols="50" rows="1" readOnly></textarea>
+                        <button onClick={deleteTemperament}>Limpiar</button>
                     </div>
 
                     <div>
                     <label for="imagen">Url de la imagen:</label>
-                    <input onChange={handlerChangeForm} type="text" id="imageUrl" name="imageUrl"/>
+                    <input onChange={handlerChangeForm} type="text" value={newDog.imageUrl} id="imageUrl" name="imageUrl"/>
                     </div>
 
-                    <button type="submit" class="register-form-submit">Crear nuevo perro</button>
+                    <button type="submit" class="register-form-submit">{isEditing ? 'Actualizar' : 'Crear nuevo perro'}</button>
                 </form>
             </div>
         </div>

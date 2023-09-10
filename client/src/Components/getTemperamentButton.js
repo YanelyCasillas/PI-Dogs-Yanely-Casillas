@@ -41,13 +41,11 @@ const temperamentButtonClick = (event, setInputValue, newDog) => {
     const inputEl = document.querySelector('#autocomplete-input')
     inputEl.value = buttonEl.innerHTML;
     removeAutocomplete();
-    
     if (newDog) {
         setInputValue({...newDog, temperamentButton: buttonEl.innerHTML})
     }else{
         setInputValue(buttonEl.innerHTML);
     }
-    
 }
 
 export default handlerChange;
