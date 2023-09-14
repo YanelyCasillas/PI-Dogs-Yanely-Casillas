@@ -1,6 +1,75 @@
-.main-container-dog{
+
+.container-card{
     margin: 0;
     padding: 0;
     color: black;
+    display: inline-flex;
+    flex-wrap: wrap;
+}
+
+.card{
+    height: 400px;
+    margin: 50px;
+    box-shadow: 5px 5px 20px black;
+    overflow: hidden;
+    position: relative;
+    border-radius: 20px;
+}
+
+.img-card{
+    height: 400px;
+    width: 450px;
+}
+
+.intro{
+    height: 60px; 
+    width: 450px;
+    padding: 10px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0px;
+    background: rgb(27, 27, 27, .5);
+    color: white;
+    transition: .5s;
+}
+
+.raza-card{
+    margin: 5px;
+    font-size: 25px;
+}
+
+.intro p {
+    font-size: 16px;
+    margin: 5px;
+    visibility: hidden;
+    opacity: 0;
+}
+.intro span{
+    color: #F9C974;
+}
+
+.card:hover .intro{
+    height: 220px;
+    bottom: 0px;
+    background: black;
+}
+
+.card:hover p{
+    opacity: 1;
+    visibility: visible;
+}
+
+.card:hover img{
+    transform: scale(1.1) rotate(-deg);
+}
+
+.home-detail-card{
     text-decoration: none;
+    color: #f28500;
+    cursor: pointer;
+}
+
+.home-detail-card p:hover{
+    transform: scale(1.05);
+    transition: transform 0.3s;
 }

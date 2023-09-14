@@ -1,25 +1,22 @@
 import './DogCard.css';
 import { NavLink } from "react-router-dom";
 
-const DogCard = ({id, name, weightImperial, weightMetric, heightImperial, heightMetric, life_span, temperament, imageUrl}) => {
+const DogCard = ({id, name, weightMetric, temperament, imageUrl}) => {
     return(
-        <NavLink to={`/detail/${id}`} className='main-container-dog'>
-            <div>
-                <h2>{`Raza: ${name}`}</h2>
-                <h2>Peso</h2>
-                <h2>{`Imperial: ${weightImperial}`}</h2>
-                <h2>{`Metric: ${weightMetric}`}</h2>
-                <h2>Altura</h2>
-                <h2>{`Imperial: ${heightImperial}`}</h2>
-                <h2>{`Metric: ${heightMetric}`}</h2>
-                <h2>{`Tiempo de vida: ${life_span}`}</h2>
-                <h2>{`Temperamento: ${temperament}`}</h2>
-                <img src={imageUrl} />
+        <div className='container-card'>
+            <div className="card">
+                <img className="img-card"src={imageUrl} />
+                <div className='intro'>
+                    <h1 className='raza-card'>{name}</h1>
+                    <p><span>Peso Metric:</span> {weightMetric}</p>
+                    <p><span>Temperamentos: </span>{temperament}</p>
+                    <NavLink className='home-detail-card' to={`/detail/${id}`}>
+                        <p >Ver detalle</p>
+                    </NavLink>
+                </div>
             </div>
-        </NavLink>
-        
+        </div>  
     )
-
 }
 
 export default DogCard;

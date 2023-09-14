@@ -8,23 +8,20 @@ import Paginacion from './Paginacion';
 
 const Home = () => {
    const [inputValue, setInputValue] = useState('');
-
-   const temperaments = useSelector((state)=> state.temperaments);
-   const dogfilter = useSelector((state) => state.dogfilter); 
-   const [currentPage, setCurrentPage] = useState(1);
+   const [dataSource, setDataSource] = useState('');
+   const [page, setPage] = useState(1);
    const [dogsPerPage] = useState(8);
-
-   //get current dogs
-   const indexOfLastDogs = currentPage * dogsPerPage;
-   const indexOfFirstDogs = indexOfLastDogs - dogsPerPage;
-   const currentDogs = dogfilter.slice(indexOfFirstDogs, indexOfLastDogs);
-
-   //change page
-   const paginate = pageNumber => setCurrentPage(pageNumber)
 
    const dispatch = useDispatch();
 
+   const temperaments = useSelector((state)=> state.temperaments);
+   const dogfilter = useSelector((state) => state.dogfilter); 
+
+   const maximo = dogfilter.length/dogsPerPage;
+   const currentDogs = dogfilter.slice((page - 1) * dogsPerPage, (page - 1) * dogsPerPage + dogsPerPage);
+
    const handlerButton = (apiOrBd) => {
+      setDataSource(apiOrBd)
       dispatch(getAllApiOrBd(apiOrBd));
    }
    
@@ -40,9 +37,10 @@ const Home = () => {
 
    const getListDogs = (event) => {
       event.preventDefault();
-      dispatch(getListDogsTemperament(inputValue));
       const inputEl = document.querySelector('#autocomplete-input')
       inputEl.value = '';
+      dispatch(getListDogsTemperament(inputValue, temperaments, dogfilter));
+      setInputValue('')
    }
 
     useEffect(()=>{
@@ -50,62 +48,63 @@ const Home = () => {
     },[])
    
    return (
-      <div class ='main-container-home'>
-         <div class='container-nav'>
-            <nav class='nav-secondary'>
-               <ul class ='nav-list'>
-                  <li class='nav-item'>
+      <div className ='main-container-home'>
+         <div className='container-nav'>
+            <div className='nav-secondary'>
+               <ul className ='nav-list'>
+                  <li className='nav-item'>
                      <button onClick={()=>handlerButton('api')}>Api</button></li>
-                  <li class='nav-item'>
+                  <li className='nav-item'>
                      <button onClick={()=>handlerButton('bd')}>Base de Datos</button></li>
-                  <li class='nav-item'>
+                  <li className='nav-item'>
                      <button onClick={()=>handlerButton('all')}>Todo</button></li>
                </ul>
-            </nav>
+            </div>
          </div>
 
-         <div class='filter-container'>
-            <select class="" onChange={handleOrderRaza}>
+         <div className='filter-container'>
+            <select className="" onChange={handleOrderRaza}>
                <option value="" disabled selected hidden>Orden por Raza</option>
-               <option class=" font-semibold " value="A" >A - Z</option>
-               <option class="font-semibold" value="D">Z - A</option>
+               <option className="filter-option " value="A" >A - Z</option>
+               <option className="filter-option" value="D">Z - A</option>
             </select>
 
-            <select class=""  onChange={handleOrderPeso}>
+            <select className=""  onChange={handleOrderPeso}>
                <option value="" disabled selected hidden>Orden por Peso</option>
-               <option class=" font-semibold " value="A" >Menor a Mayor</option>
-               <option class="font-semibold" value="D">Mayor a Menor</option>
+               <option className="filter-option" value="A" >Menor a Mayor</option>
+               <option className="filter-option" value="D">Mayor a Menor</option>
             </select>
 
             <form onSubmit={getListDogs} autocomplete="off">
-               <div id='autocomplete-wrapper' class='autocomplete-wrapper'>
-               <input id='autocomplete-input' onChange={(event)=>handlerChange(event, temperaments, setInputValue)} type="text" placeholder='Temperamentos'/>
+               <div id='autocomplete-wrapper' className='autocomplete-wrapper'>
+                  <input className='temperament-input' id='autocomplete-input' onChange={(event)=>handlerChange(event, temperaments, setInputValue)} type="text" placeholder='Temperamentos'/>
                </div>
-               <button type='submit' >Buscar</button>
+               
+               <button className='temperament-button' type='submit' >Buscar</button>
             </form>
          </div>
 
-         <div>
-            {
-               currentDogs.map(({id, imageUrl, name, weight, height, life_span, temperament}) => {
-                  return(
-                     <DogCard
-                        key={id}
-                        id={id}
-                        name={name}
-                        weightImperial={weight.imperial}
-                        weightMetric={weight.metric}
-                        heightImperial={height.imperial}
-                        heightMetric={height.metric}
-                        life_span={life_span}
-                        temperament={temperament}
-                        imageUrl={imageUrl}
-                     />
-                  )
-               })
-            }
-         </div>
-         <Paginacion dogsPerPage={dogsPerPage} totalDogs={dogfilter.length} paginate={paginate}/>
+         {
+            currentDogs.map(({id, imageUrl, name, weight, height, life_span, temperament}) => {
+               return(
+                  <DogCard
+                     key={id}
+                     id={id}
+                     name={name}
+                     weightImperial={weight.imperial}
+                     weightMetric={weight.metric}
+                     heightImperial={height.imperial}
+                     heightMetric={height.metric}
+                     life_span={life_span}
+                     temperament={temperament}
+                     imageUrl={imageUrl}
+                  />
+               )
+            })
+         }
+         
+         <Paginacion page={page} setPage={setPage} maximo={maximo} dataSource={dataSource}/>
+         
       </div>
       
    )

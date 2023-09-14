@@ -7,10 +7,8 @@ const Landing = ({handleAccess}) => {
                 <h1 className='title'>Bienvenidos</h1>
                 <button onClick={handleAccess} className='btnGetIn'>INGRESAR</button>
             </div>
-            
         </div>
     )
-
 }
 
 export default Landing;

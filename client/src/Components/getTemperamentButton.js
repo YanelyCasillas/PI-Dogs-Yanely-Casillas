@@ -1,15 +1,27 @@
 const handlerChange = (event, temperaments, setInputValue, newDog) => {
     removeAutocomplete();
-    
+
     const value = event.target.value.toLowerCase();
 
     if (value.length === 0) return;
+
     const filteredTemp = [];
+    
     temperaments.forEach((temperament) => {
         if (temperament.substr(0, event.target.value.length).toLowerCase() === value) {
             filteredTemp.push(temperament)
         }
     });
+
+    if (filteredTemp.length === 0) {
+        if (newDog) {
+            setInputValue({...newDog, temperamentButton: ''});
+        }else{
+            setInputValue(value);
+        }
+        return
+    }
+
     createAutocomplete(filteredTemp, setInputValue, newDog);
 }
 
@@ -33,7 +45,6 @@ const removeAutocomplete = () => {
     const listEl = document.querySelector("#autocomplete-list");
     if (listEl) listEl.remove();
 }
-
 
 const temperamentButtonClick = (event, setInputValue, newDog) => {
     event.preventDefault();

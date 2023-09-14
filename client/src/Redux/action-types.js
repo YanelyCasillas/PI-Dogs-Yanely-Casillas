@@ -6,7 +6,4 @@ export const GET_ALL_API_OR_BD = 'GET_ALL_API_OR_BD'
 export const GET_ORDER_RAZA = 'GET_ORDER_RAZA'
 export const GET_ORDER_PESO = 'GET_ORDER_PESO'
 export const GET_LIST_DOGS_TEMPERAMENT = 'GET_LIST_DOGS_TEMPERAMENT'
-export const POST_DOG = 'POST_DOG'
-export const DELETE_DOG = 'DELETE_DOG'
-export const UPDATE_DOG = 'UPDATE_DOG'
 

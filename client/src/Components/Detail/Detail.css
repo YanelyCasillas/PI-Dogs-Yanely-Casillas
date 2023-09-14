@@ -1,5 +1,112 @@
 .main-container-detail{
-    margin: 0;
+    margin: 100px 0 0 0;
     padding: 0;
-    color: black;
+    color: white;
+    height: auto;
+    width: calc(100vw - 17px);
+}
+
+.container-detail{
+    display: flex;
+    margin: 0 80px;
+}
+
+.data-detail{
+    width: 50%;
+    background-color: #987654;
+    border-radius: 20px;
+    box-shadow: 5px 5px 20px black;
+    text-align: left;
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin: auto;
+    height: 410px;
+    width: 500px;
+}
+.data-detail p{
+    display: flex;
+    gap: 5px;
+}
+
+.raza-detail{
+    justify-content: center;
+    text-align: center;
+    font-size: 29px;
+    margin: 0;
+    font-weight: 600;
+}
+
+.data-detail ul{
+    list-style: none;
+    
+} 
+.data-detail li span{
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.data-detail li{
+    display: flex;
+    gap: 5px;
+} 
+
+.data-detail li span{
+    color: white;
+} 
+
+.data-detail span{
+    font-size: 18px;
+    font-weight: 600;
+    color: #F9C974;
+}
+
+.container-img-detail{
+    width: 50%;
+}
+
+.img-detail{
+    height: 450px;
+    width: 500px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 20px black;
+}
+
+.container-button-detail{
+    margin: 30px auto 20px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-button-detail button,
+.go-back{
+    background-color: #654321; 
+    color: white; 
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px; 
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    font-size: 15px;
+    font-weight: 600;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
+}
+
+.container-button-detail button:hover,
+.go-back:hover{
+    transform: scale(1.05); 
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.div-go-back{
+    display: flex;
+    justify-content: flex-start;
+    margin: 0 0 20px 70px;
+}
+
+.go-back{
+    background-color: #f6b53c;
 }

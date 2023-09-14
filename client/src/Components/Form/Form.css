@@ -1,11 +1,81 @@
 .main-container-form{
+    color: white;
+    width: calc(100vw - 17px);
     margin: 0;
     padding: 0;
-    color: black;
+    background: url("../../../image/fondo-form_Page_3.jpg") no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex; 
+    justify-content: flex-end;
+    align-items: center;
+    height: auto;
+}
+
+.wrapper{
+    width: 600px;
+    background: rgb(27, 27, 27, .5);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    padding: 30px 0;
+    margin: 110px;
+}
+
+.wrapper .form-box{
+    width: 100%;
+    height: 100%;
+}
+
+.register-title{
+    font-size: 2rem;
+    color: white;
+    text-align: center;
+    margin: 0 0 10px 0;
+}
+
+.register-form input{
+    font-size: 15px;
+    border-radius: 10px;
+}
+
+.register-form{
+    display: grid;
+    row-gap: 12px;
+}
+
+.register-form span{
+    color: #8dce25;
+    font-weight: 600;
+}
+
+.form-button{
+    background-color: #f6b53c; 
+    color: white; 
+    border: none;
+    border-radius: 10px;
+    padding: 5px 15px; 
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    font-size: 15px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.form-button:hover{
+    background-color: #f28500; 
+    transform: scale(1.05); 
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3); 
+}
+
+.second-sector{
+    display: block;
 }
 
 .three-sector{
-    display: flex;
+    display: block;
     justify-content: center;
     align-items: center;
 }
@@ -18,21 +88,49 @@
 .four-sector select{
     margin: 0 10px;
     width: 50px;
+    border-radius: 5px;
+    font-size: 15px;
 }
 
-.six-sector{
-
-    justify-content: center;
-    align-items: center;
+.five-sector span{
+    margin-top: 10px;
 }
 
-.six-sector label,textarea{
-    margin: auto;
+.five-sector input{
+    margin: 0 5px;
+}
+
+.six-sector label, span{
     display: block;
 }
 
-button{
-    cursor: pointer;
+.six-sector textarea{
+    display: block;
+    margin: 5px auto;
+    border-radius: 5px;
+}
+
+.six-sector button{
+    margin-top: 10px;
+}
+
+.seven-sector span{
+    display: block;
+}
+
+.button-submit{
+    width: 180px;
+    margin: auto;
+}
+
+.button-submit[disabled],
+.agree[disabled]{
+    cursor: no-drop;
+}
+.button-submit[disabled]:hover,
+.agree[disabled]:hover{
+    background-color: #f6b53c; 
+    transform: none; 
 }
 
 .autocomplete-wrapper{
@@ -51,10 +149,11 @@ button{
 .autocomplete-list li{
     border: 1px solid #e9e9e9;
     border-top: unset;
+    background-color: white;
 }
 
 .autocomplete-list li:hover{
-    background: #f7f7f7;
+    background: #fcd286;
 }
 
 .autocomplete-list button{
@@ -64,6 +163,8 @@ button{
     width: 100%;
     text-align: left;
     padding: 0.5rem;
+    font-size: 15px;
+    font-weight: 500;
 }
 
 input[type=number]::-webkit-inner-spin-button,

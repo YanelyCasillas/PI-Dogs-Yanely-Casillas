@@ -1,5 +1,38 @@
 .main-container-nav{
-    margin: 0;
-    padding: 0;
-    color: red;
+    top: 0px;
+    padding: 20px 0;
+    display: flex;
+    position: fixed;
+    width: 100%;
+    background: url("../../../image/fondo-form_Page_2.jpg") no-repeat center center fixed;
+    justify-content: flex-end;
+    z-index: 2;
+
+}
+
+.container-button{
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 0 120px 0 0;
+}
+
+.container-button button{
+    background-color: #987654; 
+    color: white; 
+    border: none;
+    border-radius: 10px;
+    padding: 10px 30px; 
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    font-size: 15px;
+    font-weight: 600;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
+}
+
+.container-button button:hover {
+    background-color: #654321; 
+    transform: scale(1.05); 
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3); 
 }

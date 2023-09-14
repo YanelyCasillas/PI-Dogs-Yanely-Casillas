@@ -1,23 +1,33 @@
-const Paginacion = ({ dogsPerPage, totalDogs, paginate }) => {
-    const pageNumbers = [];
+import { useEffect, useState } from 'react';
+import './Home.css'
 
-    for (let i = 1; i <=  Math.ceil(totalDogs / dogsPerPage); i++) {
-        pageNumbers.push(i);
+const Paginacion = ({ page, setPage, maximo, dataSource}) => {
+    const [input, setInput] = useState(1);
+
+    const nextPage = () => {
+        setInput(parseInt(input) + 1);
+        setPage(parseInt(page) + 1)
+        window.scrollTo(0, 0);
     }
 
+    const previousPage = () => {
+        setInput(parseInt(input)  - 1);
+        setPage(parseInt(page) - 1)
+        window.scrollTo(0, 0);
+    }
+
+    useEffect(() => {
+        setInput(1);
+        setPage(1)
+      }, [dataSource]);
+
     return(
-        <nav>
-            <ul className="pagination">
-                {pageNumbers.map(number => (
-                    <li key={number} className="page-item">
-                        <a href="#!" onClick={()=>{paginate(number)}} className="page-link">
-                            {number}
-                        </a>
-                    </li>
-                ))
-                }
-            </ul>
-        </nav>
+        <div className='container-pagination'>
+            <button disabled={page === 1 || page < 1} onClick={previousPage} className='previousPage'>prev</button>
+            <input readOnly name='page' autoComplete='off' value={input}/>
+            <p>de {Math.ceil(maximo)}</p>
+            <button disabled={page === Math.ceil(maximo) || page > Math.ceil(maximo) }  onClick={nextPage} className='nextPage'>next</button>
+        </div>
     );
 };
 

@@ -5,6 +5,7 @@ const { URL, API_KEY } = process.env;
 
 const getDogs = async() => {
     const {data} = await axios.get(`${URL}/?api_key=${API_KEY}`);
+
     const dogsApi = data.map(({id, image: {url}, name, weight, height, life_span, temperament}) =>
     ({id, imageUrl: url, name, weight, height, life_span, temperament}));
 
@@ -22,6 +23,8 @@ const getDogs = async() => {
         const temperament = temperaments.map((t) => t.name).join(', ');
         return {id, imageUrl, name, height, weight, life_span, temperament}
     })
+    
     return [...dogsApi, ...dogBD];
 };
+
 module.exports = getDogs;

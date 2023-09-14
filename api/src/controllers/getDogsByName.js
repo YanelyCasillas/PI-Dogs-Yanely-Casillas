@@ -5,12 +5,9 @@ require('dotenv').config();
 const { URL, API_KEY } = process.env;
 
 const getDogsByName = async(name) => {
-
     const capitalizeWords = (name) => {
-        return name
-            .split(' ')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(' ');
+        return name.split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     }
 
     const formattedName = capitalizeWords(name);
@@ -30,6 +27,7 @@ const getDogsByName = async(name) => {
     })
 
     const {data} = await axios.get(`${URL}/search?q=${name}&api_key=${API_KEY}`);
+    
     const dogsApi = data.map(({id, image: {url}, name, weight, height, life_span, temperament}) => 
     ({id, imageUrl: url, name, weight, height, life_span, temperament}));
 

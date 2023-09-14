@@ -1,4 +1,4 @@
-import { GET_ALLDOGS, GET_DOGSBYNAME, GET_DOGSBYID, GET_TEMPERAMENTS, GET_ALL_API_OR_BD, GET_ORDER_PESO, GET_ORDER_RAZA, GET_LIST_DOGS_TEMPERAMENT, POST_DOG, DELETE_DOG, UPDATE_DOG } from "./action-types";
+import { GET_ALLDOGS, GET_DOGSBYNAME, GET_DOGSBYID, GET_TEMPERAMENTS, GET_ALL_API_OR_BD, GET_ORDER_PESO, GET_ORDER_RAZA, GET_LIST_DOGS_TEMPERAMENT } from "./action-types";
 import axios from 'axios';
 
 export const getAllDogs = () => {
@@ -21,10 +21,15 @@ export const getDogsByName = (name) => {
         const endpoint = `http://localhost:3001/dogs/name?name=${name}`;
         return async(dispatch) => {
             const {data} = await axios.get(endpoint);
-            return dispatch({
-                type: GET_DOGSBYNAME,
-                payload: data,
-            });
+            console.log(data);
+            if (data.length > 0) {
+                return dispatch({
+                    type: GET_DOGSBYNAME,
+                    payload: data,
+                });
+            }else{
+                window.alert('El perro no existe');
+            }
         };
     } catch (error) {
         console.log(error.message);
@@ -33,14 +38,22 @@ export const getDogsByName = (name) => {
 
 export const getDogsById = (id) => {
     try {
-        const endpoint = `http://localhost:3001/dogs/${id}`;
-        return async(dispatch) => {
-            const {data} = await axios.get(endpoint);
-            return dispatch({
+        if (id) {
+            const endpoint = `http://localhost:3001/dogs/${id}`;
+            return async(dispatch) => {
+                const {data} = await axios.get(endpoint);
+                return dispatch({
+                    type: GET_DOGSBYID,
+                    payload: data,
+                });
+            };
+        }else{
+            return ({
                 type: GET_DOGSBYID,
-                payload: data,
+                payload: {},
             });
-        };
+        }
+        
     } catch (error) {
         console.log(error.message);
     }
@@ -74,20 +87,33 @@ export const getOrderRaza = (order) => {
     return {type: GET_ORDER_RAZA, payload: order}
 }
 
-export const getListDogsTemperament = (temperament) => {
-    return {type: GET_LIST_DOGS_TEMPERAMENT, payload: temperament}
+export const getListDogsTemperament = (temperament, allTemperaments, dogfilter) => {
+    console.log(temperament);
+    if (allTemperaments.includes(temperament)) {
+        let dogsFilter = dogfilter.filter((d)=>{
+            if (d.temperament) {
+                let dogsTemperaments = d.temperament.split(', ');
+                return dogsTemperaments.includes(temperament);
+            }
+        })
+        if (dogsFilter.length === 0) {
+            window.alert('No hay un perro con ese temperamento');
+        }else{
+            return {type: GET_LIST_DOGS_TEMPERAMENT, payload: dogsFilter}
+        } 
+    }else{
+        window.alert('No existe ese temperamento');
+    }
 }
 
 export const postDog = (postNewDog) => {
-    console.log(postNewDog);
     try {
         const endpoint = 'http://localhost:3001/dogs';
         return async(dispatch) => {
             const {data} = await axios.post(endpoint, postNewDog);
-            return dispatch({
-                type: POST_DOG,
-                payload: data,
-            });
+            if (data) {
+                window.alert(data);
+            }
         };
     } catch (error) {
         console.log(error.message);
@@ -99,10 +125,9 @@ export const deleteDog = (id) => {
         const endpoint = `http://localhost:3001/dogs/${id}`;
         return async(dispatch) => {
             const {data} = await axios.delete(endpoint);
-            return dispatch({
-                type: DELETE_DOG,
-                payload: data,
-            });
+            if (data) {
+                window.alert(data);
+            }
         };
     } catch (error) {
         console.log(error.message);
@@ -114,10 +139,9 @@ export const updateDog = (newDog) => {
         const endpoint = 'http://localhost:3001/dogs';
         return async(dispatch) => {
             const {data} = await axios.put(endpoint, newDog);
-            return dispatch({
-                type: UPDATE_DOG,
-                payload: data,
-            });
+            if (data) {
+                window.alert(data);
+            }
         };
     } catch (error) {
         console.log(error.message);

@@ -1,11 +1,10 @@
-import { GET_ALLDOGS, GET_DOGSBYNAME, GET_DOGSBYID, GET_TEMPERAMENTS, GET_ALL_API_OR_BD, GET_ORDER_PESO, GET_ORDER_RAZA, GET_LIST_DOGS_TEMPERAMENT, POST_DOG, DELETE_DOG, UPDATE_DOG } from "./action-types";
+import { GET_ALLDOGS, GET_DOGSBYNAME, GET_DOGSBYID, GET_TEMPERAMENTS, GET_ALL_API_OR_BD, GET_ORDER_PESO, GET_ORDER_RAZA, GET_LIST_DOGS_TEMPERAMENT } from "./action-types";
 
 const initialState = {
     allDogs: [],//original
     dogfilter: [],//copia
-    dogDetail: [],
+    dogDetail: {},
     temperaments: [],
-    messageDog: ''
 };
 
 const reducer = (state = initialState, action) => {
@@ -62,35 +61,13 @@ const reducer = (state = initialState, action) => {
             };
          
         case GET_LIST_DOGS_TEMPERAMENT:
-            let dogsFilter = state.allDogs.filter((d)=>{
-                if (d.temperament) {
-                    let dogsTemperaments = d.temperament.split(', ');
-                    return dogsTemperaments.includes(action.payload);
-                }
-                
-            })
             return{
                 ...state,
-                dogfilter: dogsFilter
+                dogfilter: action.payload
             };
-        case POST_DOG:
-            return{
-                ...state,
-                messageDog: action.payload
-            };
-        case DELETE_DOG:
-            return{
-                ...state,
-                messageDog: action.payload
-            };
-        case UPDATE_DOG:
-            return{
-                ...state,
-                messageDog: action.payload
-            };
+
         default: return {...state}
     }
-
 }
 
 export default reducer;

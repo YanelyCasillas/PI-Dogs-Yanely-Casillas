@@ -5,6 +5,7 @@ const {Temperament} = require('../db');
 
 const getTemperaments = async() => {
     const {data} = await axios.get(`${URL}/?api_key=${API_KEY}`);
+    
     for (const {temperament} of data) {
         if (temperament) {
             const arrayTemperaments = temperament.split(', ');

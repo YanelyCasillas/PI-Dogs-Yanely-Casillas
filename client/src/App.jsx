@@ -7,7 +7,7 @@ import Home from './Components/Home/Home';
 import Landing from './Components/Landing/Landing';
 import Nav from './Components/Nav/Nav';
 import { getAllDogs } from './Redux/action';
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 
 function App() {

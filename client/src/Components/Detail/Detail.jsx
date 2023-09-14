@@ -1,47 +1,74 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import {useParams} from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
-import { deleteDog, getDogsById } from '../../Redux/action';
+import { deleteDog, getDogsById, getAllDogs, getAllApiOrBd } from '../../Redux/action';
 import { useNavigate} from 'react-router-dom';
 import './Detail.css';
 
 const Detail = () => {
     const { id } = useParams();
 
-
     const dogDetail = useSelector((state)=>state.dogDetail);
     
-
     const dispatch = useDispatch();
 
     useEffect(()=>{
+        dispatch(getAllDogs());
         dispatch(getDogsById(id))
+        
     },[])
 
+    const navigate = useNavigate();
+    
     const deleteDogButton = () => {
         dispatch(deleteDog(id));
+        dispatch(getAllDogs());
+        setTimeout(() => {
+            navigate('/home');
+        }, 100);
     }
 
-    const navigate = useNavigate();
-
     const updateDogButton = () => {
-        navigate(`/form/${id}`)
+        navigate(`/form/${id}`);
+    }
+
+    const goBack = () => {
+        dispatch(getDogsById());
+        dispatch(getAllApiOrBd('bd'));
+        navigate('/home');
     }
  
     return(
-        <div class='main-container-detail'>
-            {id != parseInt(id) && (<button onClick={deleteDogButton}>Eliminar</button>)}
-            {id != parseInt(id) && (<button onClick={updateDogButton}>Actualizar</button>)}
-            <h2>Raza: {dogDetail.name && dogDetail.name}</h2>
-            <h2>Peso</h2>
-            <h2>Imperial: {dogDetail.weight?.imperial && dogDetail.weight?.imperial}</h2>
-            <h2>Metric: {dogDetail.weight?.metric && dogDetail.weight?.metric}</h2>
-            <h2>Altura</h2>
-            <h2>Imperial: {dogDetail.height?.imperial && dogDetail.height?.imperial}</h2>
-            <h2>Metric: {dogDetail.height?.metric && dogDetail.height?.metric}</h2>
-            <h2>Tiempo de vida: {dogDetail.life_span && dogDetail.life_span}</h2>
-            <h2>Temperamento: {dogDetail.temperament && dogDetail.temperament}</h2>
-            <img src={dogDetail.imageUrl} />
+        <div className='main-container-detail'>
+            <div className='div-go-back'>
+                <button className='go-back' onClick={goBack}>Regresar</button>
+            </div>
+            <div className='container-detail'>
+                <div className='data-detail'>
+                    <p className='raza-detail'>{dogDetail.name && dogDetail.name}</p>
+                    <span>Peso: </span>
+                    <ul>
+                        <li><span>Imperial: </span>{dogDetail.weight?.imperial && dogDetail.weight?.imperial}</li>
+                        <li><span>Metric: </span>{dogDetail.weight?.metric && dogDetail.weight?.metric}</li>
+                    </ul>
+                    <span>Altura: </span>
+                    <ul>
+                        <li><span>Imperial: </span>{dogDetail.height?.imperial && dogDetail.height?.imperial}</li>
+                        <li><span>Metric: </span>{dogDetail.height?.metric && dogDetail.height?.metric}</li>
+                    </ul>
+                    <p><span>Tiempo de vida: </span>{dogDetail.life_span && dogDetail.life_span}</p>
+                    <p><span>Temperamento: </span>{dogDetail.temperament && dogDetail.temperament}</p>
+                </div>
+                
+                <div className='container-img-detail'>
+                    <img className='img-detail'src={dogDetail.imageUrl} />
+                </div>
+            </div>
+            
+            <div className='container-button-detail'>
+                {id != parseInt(id) && (<button onClick={updateDogButton}>Actualizar</button>)}
+                {id != parseInt(id) && (<button onClick={deleteDogButton}>Eliminar</button>)}
+            </div>
         </div>
     );
 
