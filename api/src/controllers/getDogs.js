@@ -18,7 +18,7 @@ const getDogs = async() => {
             }
         }
     ]});
-
+    
     const dogBD = allDog.map(({id, imageUrl, name, height, weight, life_span, temperaments})=>{
         const temperament = temperaments.map((t) => t.name).join(', ');
         return {id, imageUrl, name, height, weight, life_span, temperament}
