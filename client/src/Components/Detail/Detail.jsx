@@ -15,7 +15,6 @@ const Detail = () => {
     useEffect(()=>{
         dispatch(getAllDogs());
         dispatch(getDogsById(id))
-        
     },[])
 
     const navigate = useNavigate();
@@ -23,9 +22,7 @@ const Detail = () => {
     const deleteDogButton = () => {
         dispatch(deleteDog(id));
         dispatch(getAllDogs());
-        setTimeout(() => {
-            navigate('/home');
-        }, 100);
+        navigate('/home');
     }
 
     const updateDogButton = () => {

@@ -23,14 +23,12 @@ const validateMeasuringSystem = (measuringSystemValue, weightMinValue, weightMax
 }
 
 const validateWeight = (weightMinValue, weightMaxValue) => {
-    console.log(weightMinValue, weightMaxValue);
     if (weightMinValue === '' && weightMaxValue === '') {
         return ''
     }
     if (weightMinValue === '0' || weightMaxValue === '0') {
         return "El peso no puede ser 0"
     }
-
     if (weightMaxValue && weightMinValue && (Number(weightMaxValue) <= Number(weightMinValue))) {
         return "El peso máximo no puede ser igual o menor que el peso mínimo"
     }
@@ -51,7 +49,10 @@ const validateHeight = (heightMinValue, heightMaxValue) => {
 }
 
 const validateLifeSpan = (life_spanMinValue, life_spanMaxValue) => {
-    if (Number(life_spanMaxValue) <= Number(life_spanMinValue)) {
+    if (!life_spanMaxValue && !life_spanMinValue) {
+        return ""
+    }
+    if (life_spanMaxValue && life_spanMinValue && (Number(life_spanMaxValue) <= Number(life_spanMinValue))) {
         return "El tiempo de vida máxima no puede ser igual o menor que el tiempo de vida mínima"
     }
     return ""
