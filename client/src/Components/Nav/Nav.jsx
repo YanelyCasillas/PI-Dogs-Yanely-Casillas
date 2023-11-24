@@ -1,7 +1,7 @@
 import './Nav.css'
 import SearchBar from '../SearchBar/SearchBar';
 import { Link } from "react-router-dom";
-import { getAllDogs } from '../../Redux/action';
+import { getAllDogs, getDogsById } from '../../Redux/action';
 import { useDispatch } from "react-redux";
 
 
@@ -9,6 +9,7 @@ const Nav = ({logOut}) => {
 
     const dispatch = useDispatch();
     const allDogsHome = () => {
+        dispatch(getDogsById());
         dispatch(getAllDogs());
     }
 
